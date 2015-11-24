@@ -6,8 +6,11 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
+		//Create arraylist to contain the memory slots read from Minput.data
 		ArrayList<MainMemory> memory = new ArrayList<MainMemory>();
+		//Create arraylist to contain the processes read from Pinput.data
 		ArrayList<Process> processes = new ArrayList<Process>();
+		//Variable to assign a number to each slot
 		int memoryCounter = 0;
 		try {
 			Scanner reader = new Scanner(new File("“Minput.data”"));
@@ -42,18 +45,29 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		reader2.close();
-		startAllocating(memory, processes);
-	}
+	
+		firstFit(memory, processes);
+		worstFit(memory, processes);
+		bestFit(memory, processes);
 
-	public static void startAllocating(ArrayList<MainMemory> mainMemory, ArrayList<Process> processes) {
+
+	}
+	//method to allocate processes to memory slots based on the first slot that is large enough for the process
+	public static void firstFit(ArrayList<MainMemory> mainMemory, ArrayList<Process> processes) {
 		for (int processNum = 0; processNum < processes.size(); processNum++){
 			for (int memSlot = 0; memSlot < mainMemory.size(); memSlot++){
 				int processSize =  processes.get(processNum).getProcessSize();
 				int slotSize = mainMemory.get(memSlot).getSlotSize();
-				if()
+				if(processSize <= slotSize){
+					mainMemory.get(memSlot).reduceSlotSize(processSize);
+				}
 			}
 		}
+	}
+	public static void worstFit(ArrayList<MainMemory> mainMemory, ArrayList<Process> processes) {
+
+	}
+	public static void bestFit(ArrayList<MainMemory> mainMemory, ArrayList<Process> processes) {
 	}
 }
 // first fit - finds the first hole that is big enough for the program
