@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,9 +60,22 @@ public class Main {
 				int processSize =  processes.get(processNum).getProcessSize();
 				int slotSize = mainMemory.get(memSlot).getSlotSize();
 				if(processSize <= slotSize){
+					//set the starting index of memory slot chosen
+					processes.get(processNum).setMemoryStart(mainMemory.get(memSlot).getStartAddress());
+					//set the end address of the memory slot that the process was allocated to
+					processes.get(processNum).setMemoryEnd();
+					//reduce the slot size of the memory slot
 					mainMemory.get(memSlot).reduceSlotSize(processSize);
 				}
 			}
+		}
+		PrintWriter writer = new PrintWriter("FFoutput.data", "UTF-8");
+		for(int index = 0; index < scheduler.size(); index++)
+		{
+			writer.print(scheduler.get(index).getStartTime() + "  " + scheduler.get(index).getEndTime() + "  " + scheduler.get(index).getProcess());
+			writer.println();
+		}
+		writer.close();
 		}
 	}
 	public static void worstFit(ArrayList<MainMemory> mainMemory, ArrayList<Process> processes) {
